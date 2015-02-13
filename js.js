@@ -24,7 +24,8 @@ function draw()
 			'grow': grow,
 			'shrink': shrink,
 			'be cool': beCool,
-			'clear': clear
+			'clear': clear,
+			'shatter': shatter
 
 	};	
 	console.log(annyang);
@@ -34,6 +35,43 @@ function draw()
 
 }
 
+function shatter()
+{
+	grow(MAINR[3]*12);
+
+	var PARTICLES = 400;
+	var pieces = [];
+	var sizeW = 0;
+	var sizeH = 0;
+	var timeID = 0;
+
+	timeId = setInterval(function ()
+		{
+			if(!busy)
+			{
+
+				sizeW = MAINR[2] / 20;
+				sizeH = MAINR[3] / 20;
+				fullClear();
+				clearInterval(timeId);
+				for(var i = 0; i <= 20; i++)
+				{
+					for(var j = 0; j <= 20; j++)
+					{
+						pieces[i+j] = [MAINR[0] + j * sizeW, MAINR[1] + i * sizeH, sizeW, sizeH];
+						ctx.fillRect(pieces[i+j][0], pieces[i+j][1]-50, pieces[i+j][2]-2, pieces[i+j][3]-2);
+					}
+				}
+			}
+		}, 250)
+
+}
+
+function fullClear()
+{
+	ctx.clearRect(0,0,wid,hei);
+	ctx.fillRect(0,hei*.9,wid,3);
+}
 
 function clear()
 {
@@ -41,7 +79,6 @@ function clear()
 	ctx.fillRect(0,hei*.9,wid,3);
 	MAINR = [wid/2-5,hei*.9-10,10,10];
 	ctx.fillRect(MAINR[0],MAINR[1],MAINR[2], MAINR[3]);
-
 }
 
 function wait()
@@ -95,7 +132,7 @@ function grow(ovr)
 {
 
 	busy = true;
-	var orig = ovr | MAINR[3]; console.log(orig);
+	var orig = ovr | MAINR[3]; 
 	var id = setInterval(function(){
 	ctx.clearRect(MAINR[0],MAINR[1],MAINR[2], MAINR[3]);
 	MAINR[2] *= 1.025;
