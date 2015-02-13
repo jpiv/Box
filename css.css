@@ -1,0 +1,22 @@
+body
+		{
+
+			background-color: yellow;
+			margin: 0;
+		}
+#can
+	{
+		border: none;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+#coms
+	{
+		margin-left: 20px;
+	}
+#canDiv
+	{
+		height: 100%;
+		width: 100%;
+	}
