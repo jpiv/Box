@@ -37,6 +37,7 @@ function draw()
 
 function shatter()
 {
+	clear();
 	grow(MAINR[3]*12);
 
 	var PARTICLES = 400;
@@ -44,6 +45,8 @@ function shatter()
 	var sizeW = 0;
 	var sizeH = 0;
 	var timeID = 0;
+	var timeID2 = 0;
+	var counter = 0;
 
 	timeId = setInterval(function ()
 		{
@@ -54,18 +57,48 @@ function shatter()
 				sizeH = MAINR[3] / 20;
 				fullClear();
 				clearInterval(timeId);
-				for(var i = 0; i <= 20; i++)
+				for(var i = 0; i < 20; i++)
 				{
-					for(var j = 0; j <= 20; j++)
+					for(var j = 0; j < 20; j++)
 					{
-						pieces[i+j] = [MAINR[0] + j * sizeW, MAINR[1] + i * sizeH, sizeW, sizeH];
-						ctx.fillRect(pieces[i+j][0], pieces[i+j][1]-50, pieces[i+j][2]-2, pieces[i+j][3]-2);
+						pieces[j + 20*i] = [MAINR[0] + j * sizeW, MAINR[1] + i * sizeH, sizeW, sizeH];
+						ctx.fillRect(pieces[j + 20*i][0], pieces[j + 20*i][1], pieces[j + 20*i][2]-2, pieces[j + 20*i][3]-2);
 					}
 				}
-			}
-		}, 250)
+				
+				
+	timeId2 = setInterval(function ()
+	{
+		for(var i = 0; i < 20; i++)
+			{
+				for(var j = 0; j < 20; j++)
+				{
+					console.log(MAINR[0] + MAINR[2]/2);
+					ctx.clearRect(pieces[j + 20*i][0], pieces[j + 20*i][1], pieces[j + 20*i][2], pieces[j + 20*i][3]);
+					if(pieces[j + 20*i][0] > MAINR[0] + MAINR[2]/2)
+					{
+						pieces[j + 20*i][0] += (Math.random() * (30)+1);
+						pieces[j + 20*i][1] -= (Math.random() * (30)+1);
+					}
+					else
+					{
+						pieces[j + 20*i][0] -= (Math.random() * (30)+1);
+						pieces[j + 20*i][1] -= (Math.random() * (30)+1);
+					}
+					ctx.fillRect(pieces[j + 20*i][0], pieces[j + 20*i][1], pieces[j + 20*i][2], pieces[j + 20*i][3]);
 
+				}
+			}
+		if(counter > 75)
+			clearInterval(timeId2);
+		else
+			counter++;
+	}, 3);
 }
+}, 20);
+}
+
+
 
 function fullClear()
 {
